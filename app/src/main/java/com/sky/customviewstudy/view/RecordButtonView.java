@@ -68,7 +68,7 @@ public class RecordButtonView extends View {
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                setLayerType(LAYER_TYPE_HARDWARE,null);
+                setLayerType(LAYER_TYPE_HARDWARE,null); setLayerType(LAYER_TYPE_HARDWARE,null); //这里也可以设置LAYER_TYPE_SOFTWARE，可以达到同样的效果
             }
 
             @Override
