@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -100,16 +101,19 @@ public class RecordButtonView extends View {
         float offset = 150 + 40 * mAnimatorValue;
 
         //先画外圆
-        mPaint.setColor(Color.RED);
+        mPaint.setColor(Color.parseColor("#8007eccc"));
         canvas.drawCircle(0,0,200,mPaint);
 
         //设置Xfermode为DST_OUT模式
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
 
         //画内圆
+        mPaint.setColor(Color.parseColor("#11d8d5"));
         canvas.drawCircle(0,0,offset,mPaint);
         //重置Xfermode
         mPaint.setXfermode(null);
+
+        canvas.drawRoundRect(new RectF(-40,-40,40,40),5,5,mPaint);
 
     }
 
