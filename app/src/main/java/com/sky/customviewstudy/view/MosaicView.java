@@ -1,6 +1,7 @@
 package com.sky.customviewstudy.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,9 +11,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -35,6 +38,8 @@ public class MosaicView extends View {
     private float tempX;
     private float tempY;
     private Mode mMode;
+    private int mGridWidth;
+
     public MosaicView(Context context) {
         this(context,null);
     }
@@ -61,9 +66,10 @@ public class MosaicView extends View {
     private void init(Context context) {
 
         path = new Path();
+        mGridWidth = dp2px(5);
 
-        mLocalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ceshi);
-        mCoverBitmap = getMosaicsBitmap(mLocalBitmap,0.1);
+        mLocalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.girls);
+        mCoverBitmap = getGridMosaic();
 
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.STROKE);
@@ -229,6 +235,43 @@ public class MosaicView extends View {
         }
     }
 
+    private Bitmap getGridMosaic() {
+        if (mLocalBitmap.getWidth() <= 0 || mLocalBitmap.getHeight() <= 0) {
+            return null;
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(mLocalBitmap.getWidth(), mLocalBitmap.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        int horCount = (int) Math.ceil(mLocalBitmap.getWidth() / (float) mGridWidth);
+        int verCount = (int) Math.ceil(mLocalBitmap.getHeight() / (float) mGridWidth);
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+
+        for (int horIndex = 0; horIndex < horCount; ++horIndex) {
+            for (int verIndex = 0; verIndex < verCount; ++verIndex) {
+                int l = mGridWidth * horIndex;
+                int t = mGridWidth * verIndex;
+                int r = l + mGridWidth;
+                if (r > mLocalBitmap.getWidth()) {
+                    r = mLocalBitmap.getWidth();
+                }
+                int b = t + mGridWidth;
+                if (b > mLocalBitmap.getHeight()) {
+                    b = mLocalBitmap.getHeight();
+                }
+                int color = mLocalBitmap.getPixel(l, t);
+                Rect rect = new Rect(l, t, r, b);
+                paint.setColor(color);
+                canvas.drawRect(rect, paint);
+            }
+        }
+        canvas.save();
+        return bitmap;
+    }
+
     public static Bitmap getMosaicsBitmaps(Bitmap bmp, double precent) {
         long start = System.currentTimeMillis();
         int bmpW = bmp.getWidth();
@@ -300,5 +343,14 @@ public class MosaicView extends View {
         return resultBmp;
     }
 
+
+    private int dp2px(int dip) {
+        Context context = this.getContext();
+        Resources resources = context.getResources();
+        int px = Math
+                .round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                        dip, resources.getDisplayMetrics()));
+        return px;
+    }
 
 }
