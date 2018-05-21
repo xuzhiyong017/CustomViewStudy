@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MatrixActivity" />
-        <activity android:name=".activity.MosaicActivity"></activity>
+        <activity android:name=".activity.MosaicActivity" />
+        <activity android:name=".activity.PathActivity" />
+        <activity android:name=".activity.ColorActivity"></activity>
     </application>
 
 </manifest>
