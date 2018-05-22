@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sky.customviewstudy.view.FocusRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/color_panel_view"
+    android:layout_width="45dp"
+    android:layout_height="45dp"
+    android:focusable="true"
+    android:duplicateParentState="true" >
+
+    <View
+        android:id="@+id/wihte_border_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/item_color_shape"/>
+
+</com.sky.customviewstudy.view.FocusRelativeLayout>
