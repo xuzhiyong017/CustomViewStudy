@@ -9,6 +9,7 @@ import com.sky.customviewstudy.activity.ColorActivity;
 import com.sky.customviewstudy.activity.MatrixActivity;
 import com.sky.customviewstudy.activity.MosaicActivity;
 import com.sky.customviewstudy.activity.PathActivity;
+import com.sky.customviewstudy.activity.SquareActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jump(View v){
-        startActivity(new Intent(this, ColorActivity.class));
+        startActivity(new Intent(this, SquareActivity.class));
     }
 }

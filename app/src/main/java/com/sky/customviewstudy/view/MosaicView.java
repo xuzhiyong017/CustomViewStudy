@@ -66,7 +66,7 @@ public class MosaicView extends View {
     private void init(Context context) {
 
         path = new Path();
-        mGridWidth = dp2px(5);
+        mGridWidth = dp2px(15);
 
         mLocalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.girls);
         mCoverBitmap = getGridMosaic();
