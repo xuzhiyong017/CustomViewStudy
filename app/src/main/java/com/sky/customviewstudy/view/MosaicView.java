@@ -66,7 +66,7 @@ public class MosaicView extends View {
     private void init(Context context) {
 
         path = new Path();
-        mGridWidth = dp2px(5);
+        mGridWidth = dp2px(15);
 
         mLocalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.girls);
         mCoverBitmap = getGridMosaic();
@@ -105,24 +105,14 @@ public class MosaicView extends View {
                         Canvas.FULL_COLOR_LAYER_SAVE_FLAG |
                         Canvas.CLIP_TO_LAYER_SAVE_FLAG);
 
-        canvas.drawBitmap(mTouchBitmap,0,0,mPaint);
+        for(Drawing drawing :drawingList){
+            drawing.draw(canvas);
+        }
+
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(mCoverBitmap,0,0,mPaint);
         mPaint.setXfermode(null);
         canvas.restoreToCount(sc);
-
-        int sc1 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null,
-                Canvas.MATRIX_SAVE_FLAG |
-                        Canvas.CLIP_SAVE_FLAG |
-                        Canvas.HAS_ALPHA_LAYER_SAVE_FLAG |
-                        Canvas.FULL_COLOR_LAYER_SAVE_FLAG |
-                        Canvas.CLIP_TO_LAYER_SAVE_FLAG);
-
-        canvas.drawBitmap(mEraserBitmap,0,0,mPaint);
-        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(mLocalBitmap,0,0,mPaint);
-        mPaint.setXfermode(null);
-        canvas.restoreToCount(sc1);
 
     }
 
@@ -140,7 +130,8 @@ public class MosaicView extends View {
             case MotionEvent.ACTION_DOWN:
                 downX = event.getX();
                 downY = event.getY();
-                path.reset();
+                path = new Path();
+                savePath(path);
                 path.moveTo(downX,downY);
                 invalidate();
                 tempX = downX;
@@ -150,25 +141,20 @@ public class MosaicView extends View {
                 float moveX = event.getX();
                 float moveY = event.getY();
                 path.quadTo(tempX,tempY,moveX,moveY);
-                if(mMode == Mode.DRAW){
-                    mTouchCanvas.drawPath(path,mPaint);
-                }else if(mMode == Mode.ERASER){
-                    mEraseCanvas.drawPath(path,mPaint);
-                }
                 invalidate();
                 tempX = moveX;
                 tempY = moveY;
                 break;
             case MotionEvent.ACTION_UP:
-                savePath();
+
                 break;
         }
         return true;
     }
 
-    private void savePath() {
+    private void savePath(Path path) {
         PathDrawing pathDrawing = new PathDrawing();
-        pathDrawing.path = new Path(path);
+        pathDrawing.path = path;
         pathDrawing.paint = mPaint;
         pathDrawing.mode = mMode;
 
@@ -194,18 +180,18 @@ public class MosaicView extends View {
 //        mEraserBitmap = Bitmap.createBitmap(mCoverBitmap.getWidth(),mCoverBitmap.getHeight(), Bitmap.Config.ARGB_8888);
 //        mEraseCanvas = new Canvas(mEraserBitmap);
 
-        mTouchCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        mEraseCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
-        if(drawingList != null && drawingList.size() > 0){
-            for (Drawing drawing:drawingList){
-                if(drawing.mode == Mode.DRAW){
-                    drawing.draw(mTouchCanvas);
-                }else{
-                    drawing.draw(mEraseCanvas);
-                }
-            }
-        }
+//        mTouchCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+//        mEraseCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+//
+//        if(drawingList != null && drawingList.size() > 0){
+//            for (Drawing drawing:drawingList){
+//                if(drawing.mode == Mode.DRAW){
+//                    drawing.draw(mTouchCanvas);
+//                }else{
+//                    drawing.draw(mEraseCanvas);
+//                }
+//            }
+//        }
         invalidate();
     }
 
@@ -231,6 +217,11 @@ public class MosaicView extends View {
 
         @Override
         public void draw(Canvas canvas){
+            if(mode == Mode.DRAW){
+                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+            }else{
+                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            }
             canvas.drawPath(path,paint);
         }
     }
