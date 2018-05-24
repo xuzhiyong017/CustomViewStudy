@@ -4,6 +4,7 @@
     android:layout_width="45dp"
     android:layout_height="45dp"
     android:focusable="true"
+    android:clickable="true"
     android:duplicateParentState="true" >
 
     <View
