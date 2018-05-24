@@ -3,14 +3,13 @@ package com.sky.customviewstudy.activity;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.sky.customviewstudy.R;
 import com.sky.customviewstudy.adapter.ColorListAdapter;
 import com.sky.customviewstudy.view.ScaleRecyclerView;
 
-public class ColorActivity extends AppCompatActivity {
+public class ColorActivity extends AppCompatActivity implements ColorListAdapter.IColorListAction{
 
     public int[] mPaintColors = {Color.parseColor("#000000"),
             Color.parseColor("#ffffff"),
@@ -40,8 +39,18 @@ public class ColorActivity extends AppCompatActivity {
         manager.supportsPredictiveItemAnimations();
         recyclerView.setLayoutManager(manager);
 
-        final ColorListAdapter mAdapter = new ColorListAdapter(this,mPaintColors,null);
+        final ColorListAdapter mAdapter = new ColorListAdapter(this,mPaintColors,this);
         recyclerView.setAdapter(mAdapter);
+
+    }
+
+    @Override
+    public void onColorSelected(int position, int color) {
+
+    }
+
+    @Override
+    public void onMoreSelected(int position) {
 
     }
 }

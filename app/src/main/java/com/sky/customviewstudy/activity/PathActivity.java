@@ -19,8 +19,8 @@ public class PathActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_path);
-        mPathView = findViewById(R.id.path_view);
-        xfermodeView = findViewById(R.id.xfer_view);
+        mPathView = (PathView) findViewById(R.id.path_view);
+        xfermodeView = (XfermodeView) findViewById(R.id.xfer_view);
     }
 
     private boolean isDraing = true;

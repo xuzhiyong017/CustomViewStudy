@@ -15,7 +15,7 @@ public class MosaicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mosaic);
-        mosaicView = findViewById(R.id.mosaic_view);
+        mosaicView = (MosaicView) findViewById(R.id.mosaic_view);
     }
 
     public void undo(View view){

@@ -3,6 +3,7 @@ package com.sky.customviewstudy.view;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
@@ -54,7 +55,35 @@ public class FocusRelativeLayout extends RelativeLayout {
         if (scaleBigAnimation == null) {
             scaleBigAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.anim_scale_big);
         }
+        scaleBigAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+//                if(null != mClickListener){
+//                    mClickListener.onSelectChange(FocusRelativeLayout.this);
+//                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         startAnimation(scaleBigAnimation);
     }
 
+    public OnSelectChangeClick mClickListener;
+
+    public void setOnSelectChange(OnSelectChangeClick listener){
+        mClickListener = listener;
+    }
+
+
+    public interface OnSelectChangeClick{
+        public void onSelectChange(View v);
+    }
 }

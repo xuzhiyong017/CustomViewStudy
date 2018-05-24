@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sky.customviewstudy.R;
+import com.sky.customviewstudy.view.FocusRelativeLayout;
 
 
 /**
@@ -107,26 +108,23 @@ public class ColorListAdapter extends RecyclerView.Adapter<ViewHolder> {
             holder.whiteViewTop.setVisibility(View.GONE);
         }
         holder.colorPanelView.setBackgroundColor(colorsData[position]);
-        holder.colorPanelView.setOnClickListener(new View.OnClickListener() {
+        holder.colorPanelView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                v.requestFocus();
+            public void onFocusChange(View v, boolean hasFocus) {
                 if(mCallback!=null){
                     mCallback.onColorSelected(position,colorsData[position]);
-//                    notifyItemChanged(curPosition);
-                    curPosition = position;
-//                    notifyItemChanged(curPosition);
+                }
+            }
+        });
+        ((FocusRelativeLayout)holder.colorPanelView).setOnSelectChange(new FocusRelativeLayout.OnSelectChangeClick() {
+            @Override
+            public void onSelectChange(View v) {
+                if(mCallback!=null){
+                    mCallback.onColorSelected(position,colorsData[position]);
                 }
             }
         });
 
-//        if(position == curPosition){
-//            holder.itemView.setScaleX(1.2f);
-//            holder.itemView.setScaleY(1.2f);
-//        }else{
-//            holder.itemView.setScaleX(1f);
-//            holder.itemView.setScaleY(1f);
-//        }
     }
 
     private void onBindColorMoreViewHolder(final MoreViewHolder holder,final int position){
