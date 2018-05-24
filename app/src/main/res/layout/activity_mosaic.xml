@@ -9,7 +9,8 @@
     <com.sky.customviewstudy.view.MosaicView
         android:id="@+id/mosaic_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +23,8 @@
             android:text="撤销"
             android:onClick="undo"
             android:textColor="#000"
-            android:background="#fff"/>
+            android:background="#fff"
+            android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -30,7 +32,8 @@
             android:text="反撤销"
             android:onClick="redo"
             android:background="#fff"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -38,7 +41,8 @@
             android:text="马赛克"
             android:onClick="mosaic"
             android:background="#fff"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -46,7 +50,18 @@
             android:text="橡皮擦"
             android:onClick="eraser"
             android:background="#fff"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:layout_weight="1"/>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保存"
+            android:onClick="save"
+            android:background="#fff"
+            android:textColor="#000"
+            android:layout_weight="1"/>
     </LinearLayout>
 
 

@@ -33,4 +33,7 @@ public class MosaicActivity extends AppCompatActivity {
     public void eraser(View view){
         mosaicView.setMode(MosaicView.Mode.ERASER);
     }
+    public void save(View view){
+        mosaicView.saveBitmap();
+    }
 }

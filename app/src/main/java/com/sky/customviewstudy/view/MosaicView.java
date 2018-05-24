@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -21,6 +22,10 @@ import android.view.View;
 
 import com.sky.customviewstudy.R;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,12 +68,17 @@ public class MosaicView extends View {
     List<Drawing> drawingList = new ArrayList<>();
     List<Drawing> deleteList = new ArrayList<>();
 
+    Matrix matrix ;
+
     private void init(Context context) {
+
+
+        setDrawingCacheEnabled(true);
 
         path = new Path();
         mGridWidth = dp2px(15);
 
-        mLocalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.girls);
+        mLocalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ceshi);
         mCoverBitmap = getGridMosaic();
 
         mPaint = new Paint();
@@ -89,6 +99,32 @@ public class MosaicView extends View {
         setLayerType(LAYER_TYPE_SOFTWARE,null);
 
         mMode = Mode.DRAW;
+
+        matrix = new Matrix();
+
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        matrix.reset();
+        matrix.postTranslate(getWidth()/2 - mLocalBitmap.getWidth()/2,getHeight()/2-mLocalBitmap.getHeight()/2);
+        matrix.postScale(caulateScale(),caulateScale(),getWidth()/2,mLocalBitmap.getHeight()/2);
+    }
+
+    public float caulateScale(){
+        float scale = 1.0f;
+
+        float imageRadio = mLocalBitmap.getWidth() / (float)mLocalBitmap.getHeight();
+        float viewRadio = getWidth() / (float)getHeight();
+
+        if(imageRadio > viewRadio){
+            scale = getWidth() /  (float)mLocalBitmap.getWidth();
+        }else{
+            scale = getHeight()  / (float)mLocalBitmap.getHeight();
+        }
+        return scale;
     }
 
     @Override
@@ -96,8 +132,10 @@ public class MosaicView extends View {
         super.onDraw(canvas);
         canvas.drawColor(Color.RED);
 
+
+
         //实现马赛克功能
-        canvas.drawBitmap(mLocalBitmap,0,0,null);
+        canvas.drawBitmap(mLocalBitmap,matrix,null);
         int sc = canvas.saveLayer(0, 0, getWidth(), getHeight(), null,
                 Canvas.MATRIX_SAVE_FLAG |
                         Canvas.CLIP_SAVE_FLAG |
@@ -110,7 +148,7 @@ public class MosaicView extends View {
         }
 
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(mCoverBitmap,0,0,mPaint);
+        canvas.drawBitmap(mCoverBitmap,matrix,mPaint);
         mPaint.setXfermode(null);
         canvas.restoreToCount(sc);
 
@@ -342,6 +380,33 @@ public class MosaicView extends View {
                 .round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                         dip, resources.getDisplayMetrics()));
         return px;
+    }
+
+    public void saveBitmap(){
+        Bitmap bitmap = getDrawingCache();
+        Bitmap bitmapNew = Bitmap.createBitmap(bitmap);
+        Log.e(TAG, "保存图片");
+        File f = new File("/sdcard/", "ceshi.png");
+        if (f.exists()) {
+            f.delete();
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(f);
+            bitmapNew.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
+            out.close();
+            Log.i(TAG, "已经保存");
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

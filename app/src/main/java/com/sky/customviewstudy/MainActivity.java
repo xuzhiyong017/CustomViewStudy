@@ -20,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jump(View v){
-        startActivity(new Intent(this, SquareActivity.class));
+        startActivity(new Intent(this, MosaicActivity.class));
     }
 }
