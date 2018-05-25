@@ -3,9 +3,11 @@ package com.sky.customviewstudy.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 
 import com.sky.customviewstudy.R;
 import com.sky.customviewstudy.view.MosaicView;
+import com.sky.customviewstudy.view.SimpleMosaicView;
 
 public class MosaicActivity extends AppCompatActivity {
 
@@ -14,6 +16,7 @@ public class MosaicActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_mosaic);
         mosaicView = (MosaicView) findViewById(R.id.mosaic_view);
     }

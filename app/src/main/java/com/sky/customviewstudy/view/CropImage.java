@@ -87,7 +87,7 @@ public class CropImage extends View {
                 invalidate();
             }
         });
-        animator.setDuration(10000);
+        animator.setDuration(2000);
         animator.start();
     }
 }

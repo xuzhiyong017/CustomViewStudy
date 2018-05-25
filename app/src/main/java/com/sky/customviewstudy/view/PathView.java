@@ -1,6 +1,5 @@
 package com.sky.customviewstudy.view;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -13,9 +12,7 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -42,7 +39,7 @@ public class PathView extends View {
     private Path path;
     private float tempX;
     private float tempY;
-    private MosaicView.Mode mMode;
+    private SimpleMosaicView.Mode mMode;
     private int mGridWidth;
 
     public PathView(Context context) {
@@ -95,7 +92,7 @@ public class PathView extends View {
         mEraseCanvas = new Canvas(mEraserBitmap);
         setLayerType(LAYER_TYPE_SOFTWARE,null);
 
-        mMode = MosaicView.Mode.DRAW;
+        mMode = SimpleMosaicView.Mode.DRAW;
     }
 
     @Override
@@ -108,7 +105,7 @@ public class PathView extends View {
 
     }
 
-    public void setMode(MosaicView.Mode mode){
+    public void setMode(SimpleMosaicView.Mode mode){
         mMode = mode;
     }
 
@@ -187,7 +184,7 @@ public class PathView extends View {
 
         if(drawingList != null && drawingList.size() > 0){
             for (Drawing drawing:drawingList){
-                if(drawing.mode == MosaicView.Mode.DRAW){
+                if(drawing.mode == SimpleMosaicView.Mode.DRAW){
                     drawing.draw(mTouchCanvas);
                 }else{
                     mPaint.setColor(Color.TRANSPARENT);
@@ -212,7 +209,7 @@ public class PathView extends View {
 
     public abstract class Drawing{
         public Paint paint;
-        public MosaicView.Mode mode;
+        public SimpleMosaicView.Mode mode;
         abstract void draw(Canvas canvas);
 
         public abstract Path getPath();

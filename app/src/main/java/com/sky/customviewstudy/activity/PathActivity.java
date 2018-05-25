@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.sky.customviewstudy.R;
-import com.sky.customviewstudy.view.MosaicView;
+import com.sky.customviewstudy.view.SimpleMosaicView;
 import com.sky.customviewstudy.view.PathView;
 import com.sky.customviewstudy.view.XfermodeView;
 
@@ -27,7 +27,7 @@ public class PathActivity extends AppCompatActivity {
 
     public void switchMode(View v){
         xfermodeView.mDraw = isDraing;
-        mPathView.setMode(isDraing ? MosaicView.Mode.DRAW: MosaicView.Mode.ERASER);
+        mPathView.setMode(isDraing ? SimpleMosaicView.Mode.DRAW: SimpleMosaicView.Mode.ERASER);
         isDraing = !isDraing;
     }
 }
