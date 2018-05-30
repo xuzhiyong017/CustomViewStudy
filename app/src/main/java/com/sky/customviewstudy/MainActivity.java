@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.sky.customviewstudy.activity.ColorActivity;
+import com.sky.customviewstudy.activity.ColorFilterActivity;
 import com.sky.customviewstudy.activity.MatrixActivity;
 import com.sky.customviewstudy.activity.MosaicActivity;
 import com.sky.customviewstudy.activity.PathActivity;
@@ -20,6 +21,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jump(View v){
-        startActivity(new Intent(this, MosaicActivity.class));
+        startActivity(new Intent(this, ColorFilterActivity.class));
     }
 }
