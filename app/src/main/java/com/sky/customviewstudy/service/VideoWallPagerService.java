@@ -62,7 +62,10 @@ public class VideoWallPagerService extends WallpaperService {
             super.onVisibilityChanged(visible);
             if(visible){
                 if(camera != null && isInit){
-                    camera.startPreview();
+                    try {
+                        camera.startPreview();
+                    }catch (Exception e){
+                    }
                 }
             }else{
                 if(camera != null){
