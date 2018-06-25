@@ -18,12 +18,60 @@
        android:layout_centerHorizontal="true"
        android:visibility="gone"/>
 
-   <Button
+   <LinearLayout
        android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="挑战页面"
-       android:layout_centerInParent="true"
-       android:onClick="jump"/>
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="马赛克页面"
+          android:layout_centerInParent="true"
+          android:onClick="mosaic"/>
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="滤镜页面"
+          android:layout_centerInParent="true"
+          android:onClick="filter"/>
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="涂鸦界面"
+          android:layout_centerInParent="true"
+          android:onClick="paint"/>
+
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="颜色选择放大ITem"
+          android:layout_centerInParent="true"
+          android:onClick="colorSelect"/>
+
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="矩阵旋转界面"
+          android:layout_centerInParent="true"
+          android:onClick="matrixRotate"/>
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="视频壁纸"
+          android:layout_centerInParent="true"
+          android:onClick="caremaWallPager"/>
+
+
+   </LinearLayout>
+
+
+
 
 
 </RelativeLayout>

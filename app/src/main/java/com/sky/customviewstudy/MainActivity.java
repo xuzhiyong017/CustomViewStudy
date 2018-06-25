@@ -11,6 +11,7 @@ import com.sky.customviewstudy.activity.ColorActivity;
 import com.sky.customviewstudy.activity.ColorFilterActivity;
 import com.sky.customviewstudy.activity.MatrixActivity;
 import com.sky.customviewstudy.activity.MosaicActivity;
+import com.sky.customviewstudy.activity.PaintActivity;
 import com.sky.customviewstudy.activity.PathActivity;
 import com.sky.customviewstudy.activity.SquareActivity;
 import com.sky.customviewstudy.service.VideoWallPagerService;
@@ -23,10 +24,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void jump(View v){
-//        startActivity(new Intent(this, ColorFilterActivity.class));
+    public void mosaic(View v) {
+        startActivity(new Intent(this, MosaicActivity.class));
 
+    }
 
+    public void filter(View v) {
+        startActivity(new Intent(this, ColorFilterActivity.class));
+
+    }
+
+    public void paint(View v) {
+        startActivity(new Intent(this, PaintActivity.class));
+
+    }
+
+    public void colorSelect(View v) {
+        startActivity(new Intent(this, ColorActivity.class));
+
+    }
+
+    public void matrixRotate(View v) {
+        startActivity(new Intent(this, MatrixActivity.class));
+
+    }
+
+    public void caremaWallPager(View v){
         Intent intent = new Intent(
                 WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
         intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,

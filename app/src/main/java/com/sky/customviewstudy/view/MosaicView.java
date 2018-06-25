@@ -105,7 +105,7 @@ public class MosaicView extends View {
         matrix = new Matrix();
         mImageRect = new RectF();
 
-        setSrc(null);
+//        setSrc(null);
 
     }
 
@@ -136,8 +136,8 @@ public class MosaicView extends View {
         matrix.postTranslate(getWidth()/2 - mLocalBitmap.getWidth()/2,getHeight()/2-mLocalBitmap.getHeight()/2);
         matrix.postScale(caulateScale(),caulateScale(),getWidth()/2,mLocalBitmap.getHeight()/2);
 
-//        mImageWidth = mLocalBitmap.getWidth();
-//        mImageHeight = mLocalBitmap.getHeight();
+        mImageWidth = mLocalBitmap.getWidth();
+        mImageHeight = mLocalBitmap.getHeight();
     }
 
     @Override
