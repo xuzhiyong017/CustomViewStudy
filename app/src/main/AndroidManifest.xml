@@ -51,7 +51,10 @@
             android:exported="true"
             android:process=":push" />
 
-        <activity android:name=".activity.PaintActivity"/>
+        <activity android:name=".activity.PaintActivity" />
+        <activity android:name=".activity.ReversalSeekBarActivity" />
+        <activity android:name=".activity.RxJavaActivity" />
+        <activity android:name=".activity.PileAvertViewActivity"></activity>
     </application>
 
 </manifest>

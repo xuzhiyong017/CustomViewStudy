@@ -67,6 +67,26 @@
           android:layout_centerInParent="true"
           android:onClick="caremaWallPager"/>
 
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="双向滑动SeekBar"
+          android:layout_centerInParent="true"
+          android:onClick="reversalSeekBar"/>
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Rxjava"
+          android:layout_centerInParent="true"
+          android:onClick="rxjavaJump"/>
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="PileAvert"
+          android:layout_centerInParent="true"
+          android:onClick="pileAvert"/>
 
    </LinearLayout>
 

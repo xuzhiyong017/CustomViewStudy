@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ReversalSeekBar">
+        <attr name="rs_pointerBackground" format="reference" />
+        <attr name="rs_backgroundColor" format="color" />
+        <attr name="rs_progressColor" format="color" />
+        <attr name="rs_progress" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="AvatarListLayout">
+        <!--创建的最大ImageView数量-->
+        <attr name="image_max_count" format="integer" />
+        <!--创建的ImageView的大小-->
+        <attr name="image_size" format="dimension" />
+        <!--要叠加的ImageView偏移量-->
+        <attr name="image_offset" format="float" />
+    </declare-styleable>
+</resources>

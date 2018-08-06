@@ -1,7 +1,6 @@
-package com.sky.customviewstudy;
+package com.example.mylibrary;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author: xuzhiyong
@@ -16,27 +15,32 @@ public class JavaTest {
 
     public static void main(String[] args){
 
-        final ArrayList<Person> personArrayList = new ArrayList<>();
+        byte[] bytes = new byte[1];
+        new String(bytes);
 
-            for(int i= 0; i< 3 ; i++){
-                final Person person = new Person();
-                person.index = i;
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        personArrayList.add(person);
-                    }
-                }).start();
 
-            }
-
-        try {
-            Thread.sleep(3000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(Arrays.toString(personArrayList.toArray()));
+//        final ArrayList<Person> personArrayList = new ArrayList<>();
+//
+//            for(int i= 0; i< 3 ; i++){
+//                final Person person = new Person();
+//                person.index = i;
+//
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        personArrayList.add(person);
+//                    }
+//                }).start();
+//
+//            }
+//
+//        try {
+//            Thread.sleep(3000L);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(Arrays.toString(personArrayList.toArray()));
     }
 
 

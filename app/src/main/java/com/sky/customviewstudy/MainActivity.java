@@ -13,6 +13,9 @@ import com.sky.customviewstudy.activity.MatrixActivity;
 import com.sky.customviewstudy.activity.MosaicActivity;
 import com.sky.customviewstudy.activity.PaintActivity;
 import com.sky.customviewstudy.activity.PathActivity;
+import com.sky.customviewstudy.activity.PileAvertViewActivity;
+import com.sky.customviewstudy.activity.ReversalSeekBarActivity;
+import com.sky.customviewstudy.activity.RxJavaActivity;
 import com.sky.customviewstudy.activity.SquareActivity;
 import com.sky.customviewstudy.service.VideoWallPagerService;
 
@@ -55,5 +58,17 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
                 new ComponentName(this, VideoWallPagerService.class));
         startActivity(intent);
+    }
+
+    public void reversalSeekBar(View v){
+        startActivity(new Intent(this, ReversalSeekBarActivity.class));
+    }
+
+    public void rxjavaJump(View v){
+        startActivity(new Intent(this, RxJavaActivity.class));
+    }
+
+    public void pileAvert(View v){
+        startActivity(new Intent(this, PileAvertViewActivity.class));
     }
 }
