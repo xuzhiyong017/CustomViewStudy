@@ -1,6 +1,9 @@
 package com.example.mylibrary;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @author: xuzhiyong
@@ -15,9 +18,12 @@ public class JavaTest {
 
     public static void main(String[] args){
 
-        byte[] bytes = new byte[1];
-        new String(bytes);
+//        byte[] bytes = new byte[1];
+//        new String(bytes);
 
+        String date = "2018-08-06 02:44:15";
+        String date1 = "2018-08-06 02:44:15";
+        System.out.println(isSameDay(date,date1));
 
 
 //        final ArrayList<Person> personArrayList = new ArrayList<>();
@@ -43,6 +49,24 @@ public class JavaTest {
 //        System.out.println(Arrays.toString(personArrayList.toArray()));
     }
 
+
+    public static boolean isSameDay(String startTime,String endTime){
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat newDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            String start = newDateFormatter.format(dateFormatter.parse(startTime));
+            String end = newDateFormatter.format(dateFormatter.parse(endTime));
+            if(start != null && start.equals(end)){
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return false;
+    }
 
     public static class Person{
         public int index;

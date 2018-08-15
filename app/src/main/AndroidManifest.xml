@@ -54,7 +54,9 @@
         <activity android:name=".activity.PaintActivity" />
         <activity android:name=".activity.ReversalSeekBarActivity" />
         <activity android:name=".activity.RxJavaActivity" />
-        <activity android:name=".activity.PileAvertViewActivity"></activity>
+        <activity android:name=".activity.PileAvertViewActivity" />
+        <activity android:name=".activity.LeakCanary.CenterActivity" />
+        <activity android:name=".activity.AppBarLayoutActivity"></activity>
     </application>
 
 </manifest>

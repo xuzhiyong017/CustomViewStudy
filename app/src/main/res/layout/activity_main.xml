@@ -88,6 +88,19 @@
           android:layout_centerInParent="true"
           android:onClick="pileAvert"/>
 
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="LeakCannary"
+          android:layout_centerInParent="true"
+          android:onClick="LeakCannary"/>
+       <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="applayout"
+          android:layout_centerInParent="true"
+          android:onClick="applayout"/>
+
    </LinearLayout>
 
 

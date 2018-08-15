@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.sky.customviewstudy.activity.AppBarLayoutActivity;
 import com.sky.customviewstudy.activity.ColorActivity;
 import com.sky.customviewstudy.activity.ColorFilterActivity;
+import com.sky.customviewstudy.activity.LeakCanary.CenterActivity;
 import com.sky.customviewstudy.activity.MatrixActivity;
 import com.sky.customviewstudy.activity.MosaicActivity;
 import com.sky.customviewstudy.activity.PaintActivity;
@@ -70,5 +72,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void pileAvert(View v){
         startActivity(new Intent(this, PileAvertViewActivity.class));
+    }
+
+    public void LeakCannary(View v){
+        startActivity(new Intent(this, CenterActivity.class));
+    }
+
+    public void applayout(View v){
+        startActivity(new Intent(this, AppBarLayoutActivity.class));
     }
 }
