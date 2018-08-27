@@ -18,90 +18,103 @@
        android:layout_centerHorizontal="true"
        android:visibility="gone"/>
 
-   <LinearLayout
-       android:layout_width="wrap_content"
-       android:layout_height="match_parent"
-       android:orientation="vertical">
-
-      <Button
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+      <LinearLayout
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="马赛克页面"
-          android:layout_centerInParent="true"
-          android:onClick="mosaic"/>
+          android:layout_height="match_parent"
+          android:orientation="vertical">
 
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="滤镜页面"
-          android:layout_centerInParent="true"
-          android:onClick="filter"/>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="马赛克页面"
+             android:layout_centerInParent="true"
+             android:onClick="mosaic"/>
 
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="涂鸦界面"
-          android:layout_centerInParent="true"
-          android:onClick="paint"/>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="滤镜页面"
+             android:layout_centerInParent="true"
+             android:onClick="filter"/>
 
-
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="颜色选择放大ITem"
-          android:layout_centerInParent="true"
-          android:onClick="colorSelect"/>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="涂鸦界面"
+             android:layout_centerInParent="true"
+             android:onClick="paint"/>
 
 
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="矩阵旋转界面"
-          android:layout_centerInParent="true"
-          android:onClick="matrixRotate"/>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="颜色选择放大ITem"
+             android:layout_centerInParent="true"
+             android:onClick="colorSelect"/>
 
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="视频壁纸"
-          android:layout_centerInParent="true"
-          android:onClick="caremaWallPager"/>
 
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="双向滑动SeekBar"
-          android:layout_centerInParent="true"
-          android:onClick="reversalSeekBar"/>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="矩阵旋转界面"
+             android:layout_centerInParent="true"
+             android:onClick="matrixRotate"/>
 
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Rxjava"
-          android:layout_centerInParent="true"
-          android:onClick="rxjavaJump"/>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="视频壁纸"
+             android:layout_centerInParent="true"
+             android:onClick="caremaWallPager"/>
 
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="PileAvert"
-          android:layout_centerInParent="true"
-          android:onClick="pileAvert"/>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="双向滑动SeekBar"
+             android:layout_centerInParent="true"
+             android:onClick="reversalSeekBar"/>
 
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="LeakCannary"
-          android:layout_centerInParent="true"
-          android:onClick="LeakCannary"/>
-       <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="applayout"
-          android:layout_centerInParent="true"
-          android:onClick="applayout"/>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Rxjava"
+             android:layout_centerInParent="true"
+             android:onClick="rxjavaJump"/>
 
-   </LinearLayout>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="PileAvert"
+             android:layout_centerInParent="true"
+             android:onClick="pileAvert"/>
+
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="LeakCannary"
+             android:layout_centerInParent="true"
+             android:onClick="LeakCannary"/>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="applayout"
+             android:layout_centerInParent="true"
+             android:onClick="applayout"/>
+
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="draghelperlayout"
+             android:layout_centerInParent="true"
+             android:onClick="draghelperlayout"/>
+
+      </LinearLayout>
+
+   </ScrollView>
+
 
 
 

@@ -10,6 +10,7 @@ import android.view.View;
 import com.sky.customviewstudy.activity.AppBarLayoutActivity;
 import com.sky.customviewstudy.activity.ColorActivity;
 import com.sky.customviewstudy.activity.ColorFilterActivity;
+import com.sky.customviewstudy.activity.DragHelperActivity;
 import com.sky.customviewstudy.activity.LeakCanary.CenterActivity;
 import com.sky.customviewstudy.activity.MatrixActivity;
 import com.sky.customviewstudy.activity.MosaicActivity;
@@ -80,5 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void applayout(View v){
         startActivity(new Intent(this, AppBarLayoutActivity.class));
+    }
+
+    public void draghelperlayout(View v){
+        startActivity(new Intent(this, DragHelperActivity.class));
     }
 }

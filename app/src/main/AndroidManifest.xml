@@ -56,7 +56,8 @@
         <activity android:name=".activity.RxJavaActivity" />
         <activity android:name=".activity.PileAvertViewActivity" />
         <activity android:name=".activity.LeakCanary.CenterActivity" />
-        <activity android:name=".activity.AppBarLayoutActivity"></activity>
+        <activity android:name=".activity.AppBarLayoutActivity" />
+        <activity android:name=".activity.DragHelperActivity"></activity>
     </application>
 
 </manifest>
