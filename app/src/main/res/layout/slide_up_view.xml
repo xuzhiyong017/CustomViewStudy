@@ -4,13 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <FrameLayout
         android:id="@+id/slide_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#000"
+        android:layout_height="300dp"
+        android:background="#e5e5"
         android:layout_gravity="bottom"
+        >
 
-        />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 
 </FrameLayout>

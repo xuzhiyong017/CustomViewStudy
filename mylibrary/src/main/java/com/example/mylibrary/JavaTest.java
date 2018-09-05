@@ -2,6 +2,8 @@ package com.example.mylibrary;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,56 +26,79 @@ public class JavaTest {
 
     public static void main(String[] args){
 
-//        byte[] bytes = new byte[1];
-//        new String(bytes);
+////        byte[] bytes = new byte[1];
+////        new String(bytes);
+////
+////        String date = "2018-08-06 02:44:15";
+////        String date1 = "2018-08-06 02:44:15";
+////        System.out.println(isSameDay(date,date1));
 //
-//        String date = "2018-08-06 02:44:15";
-//        String date1 = "2018-08-06 02:44:15";
-//        System.out.println(isSameDay(date,date1));
-
-        AtomicInteger count = new AtomicInteger();
-
+//        AtomicInteger count = new AtomicInteger();
+//
+////        Observable.range(1, 10)
+////                .doOnNext(ignored -> count.incrementAndGet())
+////                .ignoreElements()
+////                .andThen(Single.just(count.get()))
+////                .subscribe(System.out::println);
+//
+//
 //        Observable.range(1, 10)
-//                .doOnNext(ignored -> count.incrementAndGet())
+//                .doOnNext(ignored ->
+//                {
+//                    count.incrementAndGet();
+//                    System.out.println("1");
+//                })
 //                .ignoreElements()
-//                .andThen(Single.just(count.get()))
+//                .andThen(Single.defer(() -> Single.just(count.get())))
 //                .subscribe(System.out::println);
+//
+////        final ArrayList<Person> personArrayList = new ArrayList<>();
+////
+////            for(int i= 0; i< 3 ; i++){
+////                final Person person = new Person();
+////                person.index = i;
+////
+////                new Thread(new Runnable() {
+////                    @Override
+////                    public void run() {
+////                        personArrayList.add(person);
+////                    }
+////                }).start();
+////
+////            }
+////
+////        try {
+////            Thread.sleep(3000L);
+////        } catch (InterruptedException e) {
+////            e.printStackTrace();
+////        }
+////        System.out.println(Arrays.toString(personArrayList.toArray()));
+//        String name = getName();
+//        System.out.println(name == null);
+
+        Gson gson = new Gson();
+        System.out.println(gson.toJson(new TestJava("xuzhiyog")));
+        System.out.println(gson.toJson(new TestJava("",29)));
+    }
 
 
-        Observable.range(1, 10)
-                .doOnNext(ignored ->
-                {
-                    count.incrementAndGet();
-                    System.out.println("1");
-                })
-                .ignoreElements()
-                .andThen(Single.defer(() -> Single.just(count.get())))
-                .subscribe(System.out::println);
+    public static class TestJava{
+        String name;
+        int age;
 
-//        final ArrayList<Person> personArrayList = new ArrayList<>();
-//
-//            for(int i= 0; i< 3 ; i++){
-//                final Person person = new Person();
-//                person.index = i;
-//
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        personArrayList.add(person);
-//                    }
-//                }).start();
-//
-//            }
-//
-//        try {
-//            Thread.sleep(3000L);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(Arrays.toString(personArrayList.toArray()));
-        String name = getName();
-        System.out.println(name == null);
 
+        public TestJava(String name) {
+            this.name = name;
+        }
+
+        public TestJava(int age){
+            this.age = age;
+        }
+
+        public TestJava(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
     }
 
     public static String getName(){

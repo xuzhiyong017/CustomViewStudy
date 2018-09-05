@@ -14,6 +14,7 @@ import com.sky.customviewstudy.activity.DragHelperActivity;
 import com.sky.customviewstudy.activity.LeakCanary.CenterActivity;
 import com.sky.customviewstudy.activity.MatrixActivity;
 import com.sky.customviewstudy.activity.MosaicActivity;
+import com.sky.customviewstudy.activity.NestedScrollActivity;
 import com.sky.customviewstudy.activity.PaintActivity;
 import com.sky.customviewstudy.activity.PathActivity;
 import com.sky.customviewstudy.activity.PileAvertViewActivity;
@@ -85,5 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void draghelperlayout(View v){
         startActivity(new Intent(this, DragHelperActivity.class));
+    }
+    public void nestscrolllayout(View v){
+        startActivity(new Intent(this, NestedScrollActivity.class));
     }
 }

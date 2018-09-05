@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.NestedScrollActivity">
+
+
+    <com.sky.customviewstudy.view.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="#050"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@drawable/home_background"
+            android:layout_gravity="bottom"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycleView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+    </com.sky.customviewstudy.view.NestedScrollView>
+</android.support.constraint.ConstraintLayout>

@@ -57,7 +57,8 @@
         <activity android:name=".activity.PileAvertViewActivity" />
         <activity android:name=".activity.LeakCanary.CenterActivity" />
         <activity android:name=".activity.AppBarLayoutActivity" />
-        <activity android:name=".activity.DragHelperActivity"></activity>
+        <activity android:name=".activity.DragHelperActivity" />
+        <activity android:name=".activity.NestedScrollActivity"></activity>
     </application>
 
 </manifest>

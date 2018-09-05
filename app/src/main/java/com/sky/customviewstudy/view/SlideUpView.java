@@ -1,12 +1,17 @@
 package com.sky.customviewstudy.view;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.sky.customviewstudy.R;
 
@@ -18,9 +23,11 @@ import com.sky.customviewstudy.R;
  */
 public class SlideUpView extends FrameLayout {
 
+    private static float Y_MIN_VELOCITY = 300;//竖直方向关闭最小值 px
     private static final String TAG = "SlideUpView";
     private View slide_view;
     private ViewDragHelper viewDragHelper;
+    private RecyclerView recycleView;
 
     public SlideUpView(Context context) {
         this(context, null);
@@ -39,31 +46,103 @@ public class SlideUpView extends FrameLayout {
     private void init(Context context) {
         View.inflate(context, R.layout.slide_up_view,this);
         slide_view = findViewById(R.id.slide_view);
+        recycleView = findViewById(R.id.recycleView);
+        recycleView.setLayoutManager(new LinearLayoutManager(context));
+        recycleView.setAdapter(new RecyclerView.Adapter() {
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View view = View.inflate(parent.getContext(),R.layout.recycle_view_item,null);
+                return new MyHolder(view);
+            }
 
+            @Override
+            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+                ((MyHolder) holder).textView.setText("位置"+position);
+            }
+
+            @Override
+            public int getItemCount() {
+                return 30;
+            }
+        });
         viewDragHelper = ViewDragHelper.create(this, 1.0f, new DraggableViewCallback(this));
 
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return viewDragHelper.shouldInterceptTouchEvent(ev);
+    public static class MyHolder extends RecyclerView.ViewHolder{
+        public TextView textView;
+        public MyHolder(View itemView) {
+            super(itemView);
+            textView = itemView.findViewById(R.id.textView);
+        }
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        viewDragHelper.processTouchEvent(event);
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if(hasViewCanScrollUp()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean hasViewCanScrollUp() {
+        if(recycleView.getTop() <= 0)
+        {
+            return false;
+        }
+
         return true;
     }
 
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        viewDragHelper.processTouchEvent(event);
+//        return true;
+//    }
+
+
+    float startY;
+    float moveY = 0;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                startY = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                moveY = ev.getY() - startY;
+                slide_view.scrollBy(0, -(int) moveY);
+                startY = ev.getY();
+                if (slide_view.getScrollY() > 0) {
+                    slide_view.scrollTo(0, 0);
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                if (slide_view.getScrollY() < - Y_MIN_VELOCITY && moveY > 0) {
+                 //关闭
+                }
+                slide_view.scrollTo(0, 0);
+                break;
+        }
+        return super.onTouchEvent(ev);
+    }
+
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Y_MIN_VELOCITY = slide_view.getHeight()/3;
+    }
 
     private static class DraggableViewCallback extends ViewDragHelper.Callback {
 
-        private static float Y_MIN_VELOCITY = 300;//竖直方向关闭最小值 px
+
 
         SlideUpView slideUpView;
 
         public DraggableViewCallback(SlideUpView slideUpView) {
-            Y_MIN_VELOCITY = slideUpView.getHeight() / 3;
             this.slideUpView = slideUpView;
         }
 
@@ -138,11 +217,28 @@ public class SlideUpView extends FrameLayout {
     }
 
     private void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
+        slide_view.scrollTo(0,dy);
     }
 
     private void closedToBottom() {
+        Log.d(TAG, "closedToBottom");
+        if (viewDragHelper.smoothSlideViewTo(this, 0, getHeight())) {
+            ViewCompat.postInvalidateOnAnimation(this);
+            //隐藏控件
+        }
     }
 
     private void onReset() {
+        Log.d(TAG, "onReset");
+        viewDragHelper.settleCapturedViewAt(0, 0);
+        ViewCompat.postInvalidateOnAnimation(this);
+    }
+
+
+    @Override
+    public void computeScroll() {
+        if (viewDragHelper.continueSettling(true)) {
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
     }
 }
