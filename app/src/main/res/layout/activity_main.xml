@@ -118,6 +118,13 @@
              android:layout_centerInParent="true"
              android:onClick="nestscrolllayout"/>
 
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="faceDetect"
+             android:layout_centerInParent="true"
+             android:onClick="faceDetect"/>
+
       </LinearLayout>
 
    </ScrollView>

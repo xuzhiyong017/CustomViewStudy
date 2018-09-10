@@ -58,7 +58,8 @@
         <activity android:name=".activity.LeakCanary.CenterActivity" />
         <activity android:name=".activity.AppBarLayoutActivity" />
         <activity android:name=".activity.DragHelperActivity" />
-        <activity android:name=".activity.NestedScrollActivity"></activity>
+        <activity android:name=".activity.NestedScrollActivity" />
+        <activity android:name=".activity.FaceDetectActivity"></activity>
     </application>
 
 </manifest>
