@@ -1,18 +1,29 @@
 package com.sky.customviewstudy.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.sky.customviewstudy.R;
+import com.sky.customviewstudy.svgparse.CityPath;
+import com.sky.customviewstudy.svgparse.ParserCallBack;
+import com.sky.customviewstudy.svgparse.SVGXmlParserUtils;
+import com.sky.customviewstudy.svgparse.ViewAttr;
+
+import java.util.List;
 
 /**
  * @author: xuzhiyong
@@ -20,8 +31,11 @@ import android.widget.ImageView;
  * @Email: 18971269648@163.com
  * @description: 描述
  */
-public class FaceDetectView extends AppCompatImageView implements ViewTreeObserver.OnGlobalLayoutListener,View.OnTouchListener,ScaleGestureDetector.OnScaleGestureListener {
+public class FaceDetectView extends View implements ViewTreeObserver.OnGlobalLayoutListener,
+        View.OnTouchListener,ScaleGestureDetector.OnScaleGestureListener,ParserCallBack {
 
+    private static final String TAG = "FaceDetectView";
+    private final Paint mPaint;
     /** 表示是否只有一次加载 */
     private boolean isOnce = false;
     /** 初始时的缩放值 */
@@ -46,6 +60,16 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
     // 是否自动缩放
     private boolean isAutoScale;
 
+    private int viewWidth;
+    private int viewHeight;
+    private ViewAttr mViewAttr;
+    private List<CityPath> list;
+    private Path mPath;
+    private float translateX;
+    private float translateY;
+    private float initTransX;
+    private float initTransY;
+
     public FaceDetectView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -60,35 +84,29 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
         this.setOnTouchListener(this);
 
         mMatrix = new Matrix();
-        // 设置缩放模式
-        super.setScaleType(ScaleType.MATRIX);
+
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        //解析svg xml
+        SVGXmlParserUtils.parserXml(getResources().openRawResource(R.raw.china), this);
 
         mScaleGesture = new ScaleGestureDetector(context, this);
         mGesture = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+
             @Override
-            public boolean onDoubleTap(MotionEvent e) {
-
-                // 如果正在缩放时，不能放大
-                if (isAutoScale) {
-                    return true;
-                }
-
-                float px = e.getX();
-                float py = e.getY();
-                // 只有小于最大缩放比例才能放大
-                float scale = getScale();
-                if (scale < mClickScale) {
-                    // mMatrix.postScale(mClickScale/scale, mClickScale/scale,
-                    // px, py);
-                    postDelayed(new ScaleRunnale(px, py, mClickScale), 16);
-                    isAutoScale = true;
-                } else {
-                    // mMatrix.postScale(mInitScale/scale, mInitScale/scale, px,
-                    // py);
-                    postDelayed(new ScaleRunnale(px, py, mInitScale), 16);
-                    isAutoScale = true;
-                }
-                // setImageMatrix(mMatrix);
+            public boolean onSingleTapUp(MotionEvent event) {
+                float x = event.getX();
+                float y = event.getY();
+                if (list != null)
+                    for (int i = 0; i < list.size(); i++) {
+                        CityPath cityPath = list.get(i);
+                        if (cityPath.isArea(x / getScale() - getTransX(), y / getScale()-getTransY())) {
+                            mPath = cityPath.getmPath();
+                            postInvalidate();
+                            Toast.makeText(getContext(), cityPath.getTitle(), Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
                 return true;
             }
         });
@@ -100,115 +118,113 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
-    private class ScaleRunnale implements Runnable {
-        // 放大值
-        private static final float BIGGER = 1.08f;
-        // 缩小值
-        private static final float SMALLER = 0.96f;
-        private float x;
-        private float y;
-        private float mTargetScale;
-        private float mTempScale;
+    @Override
+    public void callback(List<CityPath> list, ViewAttr viewAttr) {
+        this.list = list;
+        mViewAttr = viewAttr;
+        // 如果还没有加载图片
+        initScale();
+    }
 
-        public ScaleRunnale(float x, float y, float mTargetScale) {
-            super();
-            this.x = x;
-            this.y = y;
-            this.mTargetScale = mTargetScale;
+    private  void initScale(){
+        if (!isOnce && mViewAttr != null) {
 
-            if (getScale() < mTargetScale) {
-                mTempScale = BIGGER;
-            } else if (getScale() > mTargetScale) {
-                mTempScale = SMALLER;
-            }
-        }
+            if(viewHeight > 0 && viewWidth >0 && mViewAttr.getWidth() >0 && mViewAttr.getHeight() > 0){
+                isOnce = true;
+                // 设定比例值
+                float scale = 0.0f;
 
-        @Override
-        public void run() {
-            // 先进行缩放
-            mMatrix.postScale(mTempScale, mTempScale, x, y);
-            checkSideAndCenterWhenScale();
-            setImageMatrix(mMatrix);
+                // 如果图片的宽度>控件的宽度，缩小
+                if (mViewAttr.getWidth() > viewWidth && mViewAttr.getHeight() < viewHeight) {
+                    scale = viewWidth * 1.0f / mViewAttr.getWidth();
+                }
+                // 如果图片的高度>控件的高度，缩小
+                if (mViewAttr.getHeight() > viewHeight && mViewAttr.getWidth() < viewWidth) {
+                    scale = viewHeight * 1.0f / mViewAttr.getHeight();
+                }
+                // 如果图片的宽高度>控件的宽高度，缩小 或者 如果图片的宽高度<控件的宽高度，放大
+                if ((mViewAttr.getWidth() > viewWidth && mViewAttr.getHeight() > viewHeight) || (mViewAttr.getWidth() < viewWidth && mViewAttr.getHeight() < viewHeight)) {
+                    float f1 = viewWidth * 1.0f / mViewAttr.getWidth();
+                    float f2 = viewHeight * 1.0f / mViewAttr.getHeight();
+                    scale = Math.min(f1, f2);
+                }
 
-            float currentScale = getScale();
+                // 初始化缩放值
+                mInitScale = scale;
+                mClickScale = mInitScale * 2;
+                mMaxScale = mInitScale * 4;
 
-            // 如果想放大，并且当前的缩放值小于目标值
-            if ((mTempScale > 1.0f && currentScale < mTargetScale)
-                    || (mTempScale < 1.0f && currentScale > mTargetScale)) {
-                // 递归执行run方法
-                postDelayed(this, 16);
-            } else {
-                float scale = mTargetScale / currentScale;
-                mMatrix.postScale(scale, scale, x, y);
-                checkSideAndCenterWhenScale();
+                // 得到移动的距离
+                int dx = viewWidth / 2 - mViewAttr.getWidth() / 2;
+                int dy = viewHeight / 2 - mViewAttr.getHeight() / 2;
+
+                initTransX = dx;
+                initTransY = dy;
+                translateX = dx;
+                translateY = dy;
+                // 平移
+                mMatrix.postTranslate(dx, dy);
+
+                // 在控件的中心缩放
+                mMatrix.postScale(scale, scale, viewWidth / 2, viewHeight / 2);
+
+                // 设置矩阵
                 setImageMatrix(mMatrix);
 
-                isAutoScale = false;
+                // 关于matrix，就是个3*3的矩阵
+                /**
+                 * xscale xskew xtrans yskew yscale ytrans 0 0 0
+                 */
             }
+            postInvalidate();
         }
+    }
 
+
+    private void setImageMatrix(Matrix matrix) {
+        postInvalidate();
     }
 
     @Override
     public void onGlobalLayout() {
-        // 如果还没有加载图片
-        if (!isOnce) {
+    }
 
-            // 获得控件的宽高
-            int width = getWidth();
-            int height = getHeight();
-
-            Drawable drawable = getDrawable();
-            if (drawable == null) {
-                return;
-            }
-            // 获得图片的宽高
-            int bitmapWidth = drawable.getIntrinsicWidth();
-            int bitmapHeight = drawable.getIntrinsicHeight();
-
-            // 设定比例值
-            float scale = 0.0f;
-
-            // 如果图片的宽度>控件的宽度，缩小
-            if (bitmapWidth > width && bitmapHeight < height) {
-                scale = width * 1.0f / bitmapWidth;
-            }
-            // 如果图片的高度>控件的高度，缩小
-            if (bitmapHeight > height && bitmapWidth < width) {
-                scale = height * 1.0f / bitmapHeight;
-            }
-            // 如果图片的宽高度>控件的宽高度，缩小 或者 如果图片的宽高度<控件的宽高度，放大
-            if ((bitmapWidth > width && bitmapHeight > height) || (bitmapWidth < width && bitmapHeight < height)) {
-                float f1 = width * 1.0f / bitmapWidth;
-                float f2 = height * 1.0f / bitmapHeight;
-                scale = Math.min(f1, f2);
-            }
-
-            // 初始化缩放值
-            mInitScale = scale;
-            mClickScale = mInitScale * 2;
-            mMaxScale = mInitScale * 4;
-
-            // 得到移动的距离
-            int dx = width / 2 - bitmapWidth / 2;
-            int dy = height / 2 - bitmapHeight / 2;
-
-            // 平移
-            mMatrix.postTranslate(dx, dy);
-
-            // 在控件的中心缩放
-            mMatrix.postScale(scale, scale, width / 2, height / 2);
-
-            // 设置矩阵
-            setImageMatrix(mMatrix);
-
-            // 关于matrix，就是个3*3的矩阵
-            /**
-             * xscale xskew xtrans yskew yscale ytrans 0 0 0
-             */
-
-            isOnce = true;
+    Matrix tmp = new Matrix();
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if (list == null) {
+            return;
         }
+        tmp.setScale(getScale(),getScale(),0,0);
+        canvas.concat(tmp);
+        canvas.translate(getTransX(),getTransY());
+        canvas.drawColor(Color.YELLOW);
+        for (int i = 0; i < list.size(); i++) {
+            CityPath path = list.get(i);
+            //绘制边的颜色
+            mPaint.setStrokeWidth(2);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setColor(Color.GRAY);
+            canvas.drawPath(path.getmPath(), mPaint);
+        }
+        if (mPath != null) {
+            mPaint.setStrokeWidth(1);
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(Color.GREEN);
+            canvas.drawPath(mPath, mPaint);
+        }
+
+    }
+
+
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        viewWidth = w;
+        viewHeight = h;
+        initScale();
     }
 
     /**
@@ -243,12 +259,28 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
         return values[Matrix.MSCALE_X];
     }
 
+    public float getTransX() {
+        /**
+         * xscale xskew xtrans yskew yscale ytrans 0 0 0
+         */
+        float[] values = new float[9];
+        mMatrix.getValues(values);
+        return values[Matrix.MTRANS_X];
+    }
+
+
+    public float getTransY() {
+        /**
+         * xscale xskew xtrans yskew yscale ytrans 0 0 0
+         */
+        float[] values = new float[9];
+        mMatrix.getValues(values);
+        return values[Matrix.MTRANS_Y];
+    }
+
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
-        // 如果没有图片，返回
-        if (getDrawable() == null) {
-            return true;
-        }
+
         // 缩放因子，>0表示正在放大，<0表示正在缩小
         float intentScale = detector.getScaleFactor();
         float scale = getScale();
@@ -269,11 +301,13 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
                 intentScale = mMaxScale / scale;
             }
 
-            // 以控件为中心缩放
-            // mMatrix.postScale(intentScale, intentScale, getWidth()/2,
-            // getHeight()/2);
-            // 以手势为中心缩放
-            mMatrix.postScale(intentScale, intentScale, detector.getFocusX(), detector.getFocusY());
+//             以控件为中心缩放
+             mMatrix.postScale(intentScale, intentScale, 0,
+             0);
+
+//             以手势为中心缩放
+//            Log.d(TAG,"onScale="+intentScale);
+//            mMatrix.postScale(intentScale, intentScale, detector.getFocusX(), detector.getFocusY());
 
             // 检测边界与中心点
             checkSideAndCenterWhenScale();
@@ -292,10 +326,9 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
     public RectF getMatrixRectF() {
         Matrix matrix = mMatrix;
         RectF rectF = new RectF();
-        Drawable drawable = getDrawable();
-        if (drawable != null) {
+        if (mViewAttr != null) {
             // 初始化矩阵
-            rectF.set(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            rectF.set(0, 0, mViewAttr.getWidth(), mViewAttr.getHeight());
             // 移动s
             matrix.mapRect(rectF);
         }
@@ -338,13 +371,21 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
         if (rectF.height() < height) {
             deltaY = height / 2f - rectF.bottom + rectF.height() / 2f;
         }
-
+        translateX += deltaX;
+        translateY += deltaY;
+        Log.d(TAG,"checkSideAndCenterWhenScale=dx*dy= "+deltaX+" * "+deltaY);
         mMatrix.postTranslate(deltaX, deltaY);
     }
+
+
+    private float mScaleCenterX;
+    private float mScaleCenterY;
 
     @Override
     public boolean onScaleBegin(ScaleGestureDetector detector) {
         // TODO Auto-generated method stub
+        mScaleCenterX = detector.getFocusX();
+        mScaleCenterY = detector.getFocusY();
         return true;
     }
 
@@ -362,7 +403,7 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
     /** 判断是否检测了x,y轴 */
     private boolean isCheckX;
     private boolean isCheckY;
-
+    private long touchTime;
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
@@ -396,6 +437,7 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                touchTime = System.currentTimeMillis();
                 if (rectF.width() > getWidth()) {
                     getParent().requestDisallowInterceptTouchEvent(true);
                 }
@@ -417,9 +459,6 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
                  */
                 if (isCanDrag) {
                     //RectF rectF = getMatrixRectF();
-                    if (getDrawable() == null) {
-                        return true;
-                    }
 
                     isCheckX = isCheckY = true;
 
@@ -432,7 +471,8 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
                         isCheckY = false;
                         dy = 0f;
                     }
-
+                    translateX += dx;
+                    translateY += dx;
                     mMatrix.postTranslate(dx, dy);
 
                     // 移动事检测边界
@@ -479,11 +519,13 @@ public class FaceDetectView extends AppCompatImageView implements ViewTreeObserv
         }
         // 移动
         mMatrix.postTranslate(deltaX, deltaY);
+        translateX += deltaX;
+        translateY += deltaY;
     }
 
     private boolean isMoveAction(float dx, float dy) {
         // 求得两点的距离
-        return Math.sqrt(dx * dx + dy * dy) > mTouchSlop;
+        return Math.sqrt(dx * dx + dy * dy) > mTouchSlop && (System.currentTimeMillis() - touchTime) > 300;
     }
 
 }

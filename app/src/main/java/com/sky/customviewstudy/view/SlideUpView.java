@@ -1,6 +1,10 @@
 package com.sky.customviewstudy.view;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.view.NestedScrollingParent;
+import android.support.v4.view.NestedScrollingParent2;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +25,7 @@ import com.sky.customviewstudy.R;
  * @Email: 18971269648@163.com
  * @description: 描述
  */
-public class SlideUpView extends FrameLayout {
+public class SlideUpView extends FrameLayout implements NestedScrollingParent2{
 
     private static float Y_MIN_VELOCITY = 300;//竖直方向关闭最小值 px
     private static final String TAG = "SlideUpView";
@@ -78,57 +82,39 @@ public class SlideUpView extends FrameLayout {
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if(hasViewCanScrollUp()){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
-    private boolean hasViewCanScrollUp() {
-        if(recycleView.getTop() <= 0)
-        {
-            return false;
-        }
-
+    public boolean onTouchEvent(MotionEvent event) {
+        viewDragHelper.processTouchEvent(event);
         return true;
     }
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        viewDragHelper.processTouchEvent(event);
-//        return true;
-//    }
-
-
-    float startY;
-    float moveY = 0;
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                startY = ev.getY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                moveY = ev.getY() - startY;
-                slide_view.scrollBy(0, -(int) moveY);
-                startY = ev.getY();
-                if (slide_view.getScrollY() > 0) {
-                    slide_view.scrollTo(0, 0);
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                if (slide_view.getScrollY() < - Y_MIN_VELOCITY && moveY > 0) {
-                 //关闭
-                }
-                slide_view.scrollTo(0, 0);
-                break;
-        }
-        return super.onTouchEvent(ev);
+    public boolean onStartNestedScroll(@NonNull View child, @NonNull View target, int axes, int type) {
+        return true;
     }
 
+    @Override
+    public void onNestedScrollAccepted(@NonNull View child, @NonNull View target, int axes, int type) {
+
+    }
+
+    @Override
+    public void onStopNestedScroll(@NonNull View target, int type) {
+
+    }
+
+    @Override
+    public void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
+
+    }
+
+    @Override
+    public void onNestedPreScroll(@NonNull View target, int dx, int dy, @Nullable int[] consumed, int type) {
+        if(dy < 0 && !target.canScrollVertically(-1)){
+
+        }
+
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
