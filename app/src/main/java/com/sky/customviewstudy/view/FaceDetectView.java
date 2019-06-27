@@ -92,6 +92,34 @@ public class FaceDetectView extends View implements ViewTreeObserver.OnGlobalLay
 
         mScaleGesture = new ScaleGestureDetector(context, this);
         mGesture = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+//            @Override
+//            public boolean onDoubleTap(MotionEvent e) {
+//
+//                Log.d(TAG,"onDoubleTap");
+//
+//                // 如果正在缩放时，不能放大
+//                if (isAutoScale) {
+//                    return true;
+//                }
+//
+//                float px = e.getX();
+//                float py = e.getY();
+//                // 只有小于最大缩放比例才能放大
+//                float scale = getScale();
+//                if (scale < mClickScale) {
+//                    // mMatrix.postScale(mClickScale/scale, mClickScale/scale,
+//                    // px, py);
+//                    postDelayed(new ScaleRunnale(px, py, mClickScale), 16);
+//                    isAutoScale = true;
+//                } else {
+//                    // mMatrix.postScale(mInitScale/scale, mInitScale/scale, px,
+//                    // py);
+//                    postDelayed(new ScaleRunnale(px, py, mInitScale), 16);
+//                    isAutoScale = true;
+//                }
+//                // setImageMatrix(mMatrix);
+//                return true;
+//            }
 
             @Override
             public boolean onSingleTapUp(MotionEvent event) {
@@ -180,6 +208,54 @@ public class FaceDetectView extends View implements ViewTreeObserver.OnGlobalLay
         }
     }
 
+    private class ScaleRunnale implements Runnable {
+        // 放大值
+        private static final float BIGGER = 1.08f;
+        // 缩小值
+        private static final float SMALLER = 0.96f;
+        private float x;
+        private float y;
+        private float mTargetScale;
+        private float mTempScale;
+
+        public ScaleRunnale(float x, float y, float mTargetScale) {
+            super();
+            this.x = x;
+            this.y = y;
+            this.mTargetScale = mTargetScale;
+
+            if (getScale() < mTargetScale) {
+                mTempScale = BIGGER;
+            } else if (getScale() > mTargetScale) {
+                mTempScale = SMALLER;
+            }
+        }
+
+        @Override
+        public void run() {
+            // 先进行缩放
+            mMatrix.postScale(mTempScale, mTempScale, x, y);
+            checkSideAndCenterWhenScale();
+            setImageMatrix(mMatrix);
+
+            float currentScale = getScale();
+
+            // 如果想放大，并且当前的缩放值小于目标值
+            if ((mTempScale > 1.0f && currentScale < mTargetScale)
+                    || (mTempScale < 1.0f && currentScale > mTargetScale)) {
+                // 递归执行run方法
+                postDelayed(this, 16);
+            } else {
+                float scale = mTargetScale / currentScale;
+                mMatrix.postScale(scale, scale, x, y);
+                checkSideAndCenterWhenScale();
+                setImageMatrix(mMatrix);
+
+                isAutoScale = false;
+            }
+        }
+
+    }
 
     private void setImageMatrix(Matrix matrix) {
         postInvalidate();
@@ -197,7 +273,7 @@ public class FaceDetectView extends View implements ViewTreeObserver.OnGlobalLay
             return;
         }
         tmp.setScale(getScale(),getScale(),0,0);
-        canvas.concat(tmp);
+        canvas.concat(mMatrix);
         canvas.translate(getTransX(),getTransY());
         canvas.drawColor(Color.YELLOW);
         for (int i = 0; i < list.size(); i++) {
@@ -301,13 +377,13 @@ public class FaceDetectView extends View implements ViewTreeObserver.OnGlobalLay
                 intentScale = mMaxScale / scale;
             }
 
-//             以控件为中心缩放
-             mMatrix.postScale(intentScale, intentScale, 0,
-             0);
+////             以控件为中心缩放
+//             mMatrix.postScale(intentScale, intentScale, 0,
+//             0);
 
 //             以手势为中心缩放
-//            Log.d(TAG,"onScale="+intentScale);
-//            mMatrix.postScale(intentScale, intentScale, detector.getFocusX(), detector.getFocusY());
+            Log.d(TAG,"onScale="+intentScale);
+            mMatrix.postScale(intentScale, intentScale, mViewAttr.getWidth()/2, mViewAttr.getHeight()/2);
 
             // 检测边界与中心点
             checkSideAndCenterWhenScale();

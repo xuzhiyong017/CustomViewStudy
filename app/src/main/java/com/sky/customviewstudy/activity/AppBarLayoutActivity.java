@@ -16,16 +16,16 @@ public class AppBarLayoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_app_bar_layout);
 
         AppBarLayout appBarLayout = findViewById(R.id.appbar);
-        final View toolbar_title = findViewById(R.id.toolbar_title);
+
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 Log.d("AppBarLayoutActivity","offset="+verticalOffset);
-                if(verticalOffset < -100){
-                    toolbar_title.setVisibility(View.GONE);
-                }else{
-                    toolbar_title.setVisibility(View.VISIBLE);
-                }
+//                if(verticalOffset < -100){
+//                    toolbar_title.setVisibility(View.GONE);
+//                }else{
+//                    toolbar_title.setVisibility(View.VISIBLE);
+//                }
             }
         });
     }

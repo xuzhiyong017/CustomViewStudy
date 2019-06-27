@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <uses-feature
         android:name="android.software.live_wallpaper"
@@ -59,7 +60,14 @@
         <activity android:name=".activity.AppBarLayoutActivity" />
         <activity android:name=".activity.DragHelperActivity" />
         <activity android:name=".activity.NestedScrollActivity" />
-        <activity android:name=".activity.FaceDetectActivity"></activity>
+        <activity android:name=".activity.FaceDetectActivity" />
+        <activity
+            android:name=".activity.CameraActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activity.Camera2Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".activity.PicToVideoActivity"></activity>
     </application>
 
 </manifest>

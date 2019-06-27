@@ -4,10 +4,12 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.sky.customviewstudy.R;
 import com.sky.customviewstudy.adapter.ColorListAdapter;
 import com.sky.customviewstudy.view.ScaleRecyclerView;
+import com.sky.customviewstudy.widget.ItemMoveTouchHelperCallback;
 
 public class ColorActivity extends AppCompatActivity implements ColorListAdapter.IColorListAction{
 
@@ -41,6 +43,9 @@ public class ColorActivity extends AppCompatActivity implements ColorListAdapter
 
         final ColorListAdapter mAdapter = new ColorListAdapter(this,mPaintColors,this);
         recyclerView.setAdapter(mAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemMoveTouchHelperCallback(recyclerView,mAdapter));
+        touchHelper.attachToRecyclerView(recyclerView);
+
 
     }
 

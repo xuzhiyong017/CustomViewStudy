@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.sky.customviewstudy.activity.AppBarLayoutActivity;
+import com.sky.customviewstudy.activity.Camera2Activity;
+import com.sky.customviewstudy.activity.CameraActivity;
 import com.sky.customviewstudy.activity.ColorActivity;
 import com.sky.customviewstudy.activity.ColorFilterActivity;
 import com.sky.customviewstudy.activity.DragHelperActivity;
@@ -18,6 +20,7 @@ import com.sky.customviewstudy.activity.MosaicActivity;
 import com.sky.customviewstudy.activity.NestedScrollActivity;
 import com.sky.customviewstudy.activity.PaintActivity;
 import com.sky.customviewstudy.activity.PathActivity;
+import com.sky.customviewstudy.activity.PicToVideoActivity;
 import com.sky.customviewstudy.activity.PileAvertViewActivity;
 import com.sky.customviewstudy.activity.ReversalSeekBarActivity;
 import com.sky.customviewstudy.activity.RxJavaActivity;
@@ -94,5 +97,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void faceDetect(View v){
         startActivity(new Intent(this, FaceDetectActivity.class));
+    }
+    public void caremaPreview(View v){
+        startActivity(new Intent(this, Camera2Activity.class));
+    }
+    public void picToVideo(View v){
+        startActivity(new Intent(this, SquareActivity.class));
     }
 }

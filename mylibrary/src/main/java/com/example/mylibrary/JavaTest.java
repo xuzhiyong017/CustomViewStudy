@@ -76,9 +76,16 @@ public class JavaTest {
 //        String name = getName();
 //        System.out.println(name == null);
 
-        Gson gson = new Gson();
-        System.out.println(gson.toJson(new TestJava("xuzhiyog")));
-        System.out.println(gson.toJson(new TestJava("",29)));
+//        Gson gson = new Gson();
+//        System.out.println(gson.toJson(new TestJava("xuzhiyog")));
+//        System.out.println(gson.toJson(new TestJava("",29)));
+
+//        for (int i = 0; i < 30; i = i+ 1) {
+//
+//            System.out.println(String.format("%04d",i));
+//        }
+        String cmd1 = "-y -i " + "concat:"+ "inputone.mp3"+"|"+ "inputtwo.mp3"+" -acodec copy "+"outpath.mp3";
+        System.out.println(cmd1);
     }
 
 

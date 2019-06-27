@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.CameraActivity"
+    android:background="@color/white"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y842"
+        android:fitsSystemWindows="true"
+        android:background="@color/white"
+        android:stateListAnimator="@null"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_behavior="@string/custom_behavior"
+        >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:minHeight="@dimen/x292"
+            app:contentScrim="@null"
+            app:expandedTitleMarginEnd="50dip"
+            app:expandedTitleMarginStart="50dip"
+            app:layout_scrollFlags="enterAlwaysCollapsed|exitUntilCollapsed|scroll"
+            >
+
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/checkedPhotosRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:layout_gravity="bottom"
+                    android:fadingEdge="none"
+                    android:overScrollMode="never"
+                    />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="@dimen/x88"
+                android:paddingBottom="2.0dip">
+
+                <FrameLayout
+                    android:id="@+id/player_wrapper"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:visibility="invisible">
+
+                    <!--<com.yxcorp.gifshow.widget.adv.VideoSDKPlayerView-->
+                    <!--android:id="@id/editorsdk_player"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:visibility="gone" />-->
+
+                    <!--<com.yxcorp.plugin.media.player.PhotoVideoPlayerView-->
+                    <!--android:id="@id/player"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center" />-->
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/imageViewerHelpView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="0.5dip"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="fitCenter" />
+
+                <RelativeLayout
+                    android:id="@+id/empty_guide_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:id="@+id/empty_image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/qmx_photovideo_zhanwei" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@+id/empty_image_view"
+                        android:layout_marginTop="@dimen/x50"
+                        android:gravity="center"
+                        android:text="请选择视频或图片,照片至少三张，至多三十张"
+                        android:textColor="#ffc6c6c6"
+                        android:textSize="17sp" />
+                </RelativeLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/flyt_min_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x88"
+                app:layout_collapseMode="pin"
+                >
+
+                <LinearLayout
+                    android:id="@+id/title_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:background="@color/white">
+
+                    <ImageButton
+                        android:id="@+id/close_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/qmx_photovideo_close"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/x24"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/rlyt_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/title_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="相机胶卷"
+                            android:gravity="center"
+                            android:textColor="#FF333333"
+                            android:textSize="36px"
+                            android:layout_centerInParent="true"
+                            />
+
+                        <ImageView
+                            android:id="@+id/up_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/qmx_photovideo_xiala"
+                            android:paddingStart="9px"
+                            android:paddingEnd="9px"
+                            android:layout_toRightOf="@+id/title_tv"
+                            />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/next_step"
+                        android:layout_width="200px"
+                        android:layout_height="match_parent"
+                        android:text="下一步"
+                        android:gravity="center"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:background="#FFDADADA"
+                    android:layout_gravity="bottom"/>
+            </FrameLayout>
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/customscrolling_behavior"/>
+
+    <FrameLayout
+        android:id="@+id/album_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/x88"
+        />
+</android.support.design.widget.CoordinatorLayout>

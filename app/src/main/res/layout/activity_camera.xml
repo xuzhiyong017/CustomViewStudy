@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.CameraActivity"
+    android:background="@color/white"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y728"
+        android:fitsSystemWindows="true"
+        android:background="@color/white"
+        app:layout_behavior="@string/custom_behavior"
+        >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:minHeight="@dimen/x400"
+            app:contentScrim="@null"
+            app:expandedTitleMarginEnd="50dip"
+            app:expandedTitleMarginStart="50dip"
+            app:layout_scrollFlags="enterAlwaysCollapsed|exitUntilCollapsed|scroll"
+            >
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/checkedPhotosRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dip"
+                    android:clipToPadding="false"
+                    android:layout_gravity="bottom"
+                    android:fadingEdge="none"
+                    android:overScrollMode="never"
+                    android:layout_weight="1"
+                    />
+
+                <ImageView
+                    android:id="@+id/drag_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x100" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="50dip"
+                android:paddingBottom="2.0dip">
+
+                <FrameLayout
+                    android:id="@+id/player_wrapper"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <!--<com.yxcorp.gifshow.widget.adv.VideoSDKPlayerView-->
+                        <!--android:id="@id/editorsdk_player"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_gravity="center"-->
+                        <!--android:visibility="gone" />-->
+
+                    <!--<com.yxcorp.plugin.media.player.PhotoVideoPlayerView-->
+                        <!--android:id="@id/player"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_gravity="center" />-->
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/imageViewerHelpView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="0.5dip"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="fitCenter" />
+
+                <FrameLayout
+                    android:id="@+id/empty_guide_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:layout_width="110.0dip"
+                        android:layout_height="110.0dip"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="104.0dip"
+                        android:src="@drawable/qmx_photovideo_zhanwei" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="10dip"
+                        android:layout_marginRight="10dip"
+                        android:layout_marginTop="228.0dip"
+                        android:gravity="center"
+                        android:text="@string/photo_picker_empty_guide"
+                        android:textColor="#ffc6c6c6"
+                        android:textSize="17sp" />
+                </FrameLayout>
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:id="@+id/flyt_min_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x100"
+                app:layout_collapseMode="pin"
+                >
+
+                <LinearLayout
+                    android:id="@+id/title_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x100"
+                    android:layout_gravity="top"
+                    android:background="@color/white">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/qmx_photovideo_close"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/x24"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/rlyt_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/title_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="相机胶卷"
+                            android:gravity="center"
+                            android:textColor="#FF333333"
+                            android:textSize="36px"
+                            android:layout_centerInParent="true"
+                            />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/qmx_photovideo_xiala"
+                            android:paddingStart="9px"
+                            android:paddingEnd="9px"
+                            android:layout_toRightOf="@+id/title_tv"
+                            />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="200px"
+                        android:layout_height="match_parent"
+                        android:text="下一步"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </FrameLayout>
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/customscrolling_behavior"/>
+</android.support.design.widget.CoordinatorLayout>

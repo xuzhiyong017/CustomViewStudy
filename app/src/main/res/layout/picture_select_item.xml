@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/checked_photo_list_item_width"
+    android:layout_height="@dimen/checked_photo_list_height">
+
+    <ImageView
+        android:id="@+id/picture"
+        android:layout_width="@dimen/checked_photo_list_avatar_height"
+        android:layout_height="@dimen/checked_photo_list_avatar_height"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12.0dip"
+        android:layout_marginRight="8.0dip"
+        android:scaleType="centerCrop"
+        />
+    
+    <ImageView
+        android:id="@+id/picture_delete"
+        android:layout_width="20.0dip"
+        android:layout_height="20.0dip"
+        android:layout_marginLeft="2.0dip"
+        android:layout_marginTop="11.0dip"
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/qmx_photovideo_delete"
+        />
+
+    <TextView
+        android:id="@+id/pic_num"
+        android:layout_width="@dimen/x30"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/picture"
+        android:layout_alignEnd="@+id/picture"
+        android:text="1"
+        android:layout_marginEnd="@dimen/x10"
+        android:textColor="#ffffff"
+        android:background="#000"
+        android:gravity="center"
+        />
+</RelativeLayout>

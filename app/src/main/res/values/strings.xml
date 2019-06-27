@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CustomViewStudy</string>
+    <string name="import_selected_icon_num" formatted="false">选中第%d张</string>
+    <string name="import_selected_count" formatted="false">选中%d</string>
+    <string name="import_selected_num_change">改变%d图片</string>
+    <string name="photo_picker_empty_guide">请选择视频或图片(可多选)</string>
+    <string name="custom_behavior">android.support.design.widget.CustomAppBarBehavior</string>
+    <string name="customscrolling_behavior">com.sky.customviewstudy.behavior.CustomScrollingViewBehavior</string>
 </resources>

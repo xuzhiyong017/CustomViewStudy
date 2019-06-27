@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import com.sky.customviewstudy.R;
 import com.sky.customviewstudy.view.FocusRelativeLayout;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
  * 颜色列表Adapter
@@ -20,6 +23,10 @@ public class ColorListAdapter extends RecyclerView.Adapter<ViewHolder> {
     public static final int TYPE_COLOR = 1;
     public static final int TYPE_MORE = 2;
     private final Context mContext;
+
+    public List<?> getDatas() {
+        return Arrays.asList(colorsData);
+    }
 
     public interface IColorListAction{
         void onColorSelected(final int position, final int color);
