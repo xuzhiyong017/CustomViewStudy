@@ -25,6 +25,7 @@ import com.sky.customviewstudy.activity.PileAvertViewActivity;
 import com.sky.customviewstudy.activity.ReversalSeekBarActivity;
 import com.sky.customviewstudy.activity.RxJavaActivity;
 import com.sky.customviewstudy.activity.SquareActivity;
+import com.sky.customviewstudy.activity.VerticalProgressBarActivity;
 import com.sky.customviewstudy.service.VideoWallPagerService;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void matrixRotate(View v) {
         startActivity(new Intent(this, MatrixActivity.class));
+
+    }
+
+    public void startVerticalProgressBar(View v) {
+        startActivity(new Intent(this, VerticalProgressBarActivity.class));
 
     }
 

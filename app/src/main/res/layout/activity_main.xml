@@ -160,6 +160,13 @@
                 android:text="picToVideo"
                 android:layout_centerInParent="true"
                 android:onClick="picToVideo"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VerticalProgressBar"
+                android:layout_centerInParent="true"
+                android:onClick="startVerticalProgressBar"/>
          </LinearLayout>
       </ScrollView>
    </LinearLayout>

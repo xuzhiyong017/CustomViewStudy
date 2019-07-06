@@ -11,7 +11,13 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Single;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * @author: xuzhiyong
@@ -84,8 +90,56 @@ public class JavaTest {
 //
 //            System.out.println(String.format("%04d",i));
 //        }
-        String cmd1 = "-y -i " + "concat:"+ "inputone.mp3"+"|"+ "inputtwo.mp3"+" -acodec copy "+"outpath.mp3";
-        System.out.println(cmd1);
+//        String cmd1 = "-y -i " + "concat:"+ "inputone.mp3"+"|"+ "inputtwo.mp3"+" -acodec copy "+"outpath.mp3";
+//        System.out.println(cmd1);
+
+        new JavaTest().testFlatMap();
+
+    }
+
+    private void testFlatMap() {
+        Integer[] integers = {1,2,3,4,5};
+        Observable.fromArray(integers)
+                .flatMap(new Function<Integer, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(Integer integer) throws Exception {
+                        return Observable.create(new ObservableOnSubscribe<Integer>() {
+                            @Override
+                            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+                               new Thread(new Runnable() {
+                                   @Override
+                                   public void run() {
+                                       try {
+                                           Thread.sleep(3000);
+                                       } catch (InterruptedException e) {
+                                           e.printStackTrace();
+                                       }
+                                       emitter.onNext(integer);
+                                       emitter.onComplete();
+                                   }
+                               }).start();
+
+                            }
+                        }).doOnTerminate(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                System.out.println("doOnTerminate "+integer);
+                            }
+                        });
+                    }
+                })
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        System.out.println("doOnTerminate");
+                    }
+                })
+                .subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+                System.out.println(o);
+            }
+        });
     }
 
 
