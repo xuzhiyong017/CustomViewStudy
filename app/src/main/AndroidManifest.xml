@@ -68,6 +68,7 @@
             android:name=".activity.Camera2Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".activity.PicToVideoActivity"></activity>
+        <activity android:name=".activity.VerticalProgressBarActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 27
@@ -48,5 +50,9 @@ dependencies {
     implementation 'org.jcodec:jcodec:0.2.3'
     implementation 'org.jcodec:jcodec-android:0.2.3'
     implementation 'com.github.yangjie10930:EpMedia:v0.9.5'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+}
+repositories {
+    mavenCentral()
 }
