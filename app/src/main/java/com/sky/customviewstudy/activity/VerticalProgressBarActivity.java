@@ -28,7 +28,7 @@ public class VerticalProgressBarActivity extends Activity {
         setContentView(R.layout.vertical_progress_activity);
         mTextClockView = findViewById(R.id.text_clock);
 
-         countScheduler = new CountScheduler(1000,5000);
+         countScheduler = new CountScheduler(3000,10000);
 
 
         new Timer().schedule(new TimerTask() {

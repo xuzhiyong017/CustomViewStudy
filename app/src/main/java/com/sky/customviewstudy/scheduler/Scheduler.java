@@ -62,7 +62,6 @@ public abstract class Scheduler {
         if (triggerTime > 0) {
             long currentTime = System.currentTimeMillis();
             long dur = currentTime - lastScheduleTime;
-            Log.d("CountScheduler","dur="+dur+" triggerTime="+triggerTime);
             if (dur > triggerTime) {
                 MAIN_HANDLER.removeCallbacks(triggerTask);
                 MAIN_HANDLER.postDelayed(triggerTask, triggerTime);
