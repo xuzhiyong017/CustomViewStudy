@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_view"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#666666"
+    android:background="#e2e2e2"
     tools:context=".activity.ConstrantAnimatorActivity">
 
     <TextView
         android:id="@+id/text1"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/x360"
         android:layout_height="0dp"
         android:background="@color/white"
         android:text="我是全屏"
@@ -20,13 +19,15 @@
         android:textColor="#000000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text2"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,9:16"
+        app:layout_constraintHorizontal_chainStyle="packed"
         />
 
     <TextView
         android:id="@+id/text2"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/x360"
         android:layout_height="0dp"
         android:background="#000000"
         android:text="我是右侧"
@@ -36,20 +37,7 @@
         app:layout_constraintStart_toEndOf="@+id/text1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/text1"
-        />
-
-    <TextView
-        android:id="@+id/text3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#000000"
-        android:text="fsf"
-        android:textColor="@color/white"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="@+id/text2"
-        app:layout_constraintStart_toStartOf="@+id/text2"
-        app:layout_constraintEnd_toEndOf="@+id/text2"
-        app:layout_constraintBottom_toBottomOf="@+id/text2"
+        app:layout_constraintDimensionRatio="h,9:16"
         />
 
 
