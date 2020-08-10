@@ -167,6 +167,13 @@
                 android:text="VerticalProgressBar"
                 android:layout_centerInParent="true"
                 android:onClick="startVerticalProgressBar"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ConstraintAnimator"
+                android:layout_centerInParent="true"
+                android:onClick="startConstraintAnimator"/>
          </LinearLayout>
       </ScrollView>
    </LinearLayout>

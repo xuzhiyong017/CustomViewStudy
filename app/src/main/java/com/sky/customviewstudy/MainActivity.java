@@ -12,6 +12,7 @@ import com.sky.customviewstudy.activity.Camera2Activity;
 import com.sky.customviewstudy.activity.CameraActivity;
 import com.sky.customviewstudy.activity.ColorActivity;
 import com.sky.customviewstudy.activity.ColorFilterActivity;
+import com.sky.customviewstudy.activity.ConstrantAnimatorActivity;
 import com.sky.customviewstudy.activity.DragHelperActivity;
 import com.sky.customviewstudy.activity.FaceDetectActivity;
 import com.sky.customviewstudy.activity.LeakCanary.CenterActivity;
@@ -109,5 +110,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void picToVideo(View v){
         startActivity(new Intent(this, SquareActivity.class));
+    }
+    public void startConstraintAnimator(View v){
+        startActivity(new Intent(this, ConstrantAnimatorActivity.class));
     }
 }
